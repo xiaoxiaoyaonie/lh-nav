@@ -32,14 +32,15 @@
     <aside class="sidebar">
       <!-- Logo区域 -->
       <div class="logo-section">
-        <img src="/logo.png" alt="logo" class="logo" />
+        <!-- 修改点：这里改为动态绑定 src，加上时间戳防缓存 -->
+        <img :src="logoUrl" alt="logo" class="logo" @error="handleLogoError" />
         <h1 class="site-title">{{ displayTitle }}</h1>
       </div>
 
       <!-- 分类导航 -->
       <nav class="category-nav">
         <h2 class="nav-title">分类导航</h2>
-                <ul class="category-list">
+        <ul class="category-list">
           <li
             v-for="category in categories"
             :key="category.id"
@@ -55,7 +56,7 @@
       <!-- 左侧边栏底部信息 -->
       <div class="sidebar-footer">
         <a
-          href="https://github.com/maodeyu180/mao_nav"
+          :href="projectUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="github-link"
@@ -71,7 +72,7 @@
 
     <!-- 右侧主内容区 -->
     <main class="main-content">
-                  <!-- 顶部搜索栏 -->
+      <!-- 顶部搜索栏 -->
       <header class="search-header">
         <div class="search-container">
           <div class="search-engine-selector">
@@ -246,11 +247,17 @@ const unlockPassword = ref('') // 解锁密码输入
 const unlocking = ref(false) // 解锁中状态
 const unlockError = ref('') // 解锁错误信息
 
+// 顶部原作者项目地址变量
+const projectUrl = 'https://github.com/maodeyu180/mao_nav'
+
 // 计算显示的标题：优先使用环境变量，否则使用接口返回的标题，最后兜底
 const envSiteTitle = import.meta.env.VITE_SITE_TITLE
 const displayTitle = computed(() => {
   return envSiteTitle || title.value || '猫猫导航'
 })
+
+// Logo地址带时间戳，防止浏览器强缓存
+const logoUrl = ref('/logo.png')
 
 // 监听标题变化动态更新 document.title
 watch(displayTitle, (newTitle) => {
@@ -391,8 +398,22 @@ const handleSearch = () => {
 // 处理图片加载错误
 const handleImageError = (event) => {
   // 设置默认的 favicon.ico 作为 fallback 图片
-  event.target.src = '/favicon.ico'
+  if (event.target.src.includes('?')) {
+    // 只有当带参数的logo加载失败时，才尝试不带参数的
+    event.target.src = '/favicon.ico'
+  }
   event.target.onerror = null // 防止无限循环
+}
+
+// 处理Logo加载错误 - 修正版
+const handleLogoError = (event) => {
+  // 如果加载带时间戳的图片失败，尝试加载原始 /logo.png
+  if (event.target.src.includes('?')) {
+    event.target.src = '/logo.png'
+  } else {
+    // 如果原始图片也失败，隐藏或显示默认
+    event.target.style.display = 'none'
+  }
 }
 
 // 移动端菜单控制
@@ -424,12 +445,17 @@ const scrollToCategoryMobile = (categoryId) => {
 
 // 打开GitHub项目页面
 const openGitHub = () => {
-  window.open('https://github.com/maodeyu180/mao_nav', '_blank')
+  window.open(projectUrl, '_blank')
 }
 
 // 组件挂载时获取数据
 onMounted(async () => {
   checkLockStatus() // 检查锁定状态
+  
+  // 给Logo增加时间戳，强制刷新缓存
+  // 这里的逻辑是：每次加载页面都尝试获取最新的 logo.png
+  logoUrl.value = `/logo.png?t=${new Date().getTime()}`
+
   await fetchCategories()
   // 设置默认搜索引擎
   selectedEngine.value = defaultSearchEngine.value
