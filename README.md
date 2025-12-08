@@ -6,14 +6,13 @@
 [![Vue](https://img.shields.io/badge/Vue-3.5.17-4FC08D?logo=vue.js)](https://vuejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4.10-646CFF?logo=vite)](https://vitejs.dev/)
 [![Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-F38020?logo=cloudflare)](https://pages.cloudflare.com/)
-
-## 🛠️ 更新记录 
-- 2025-07-15 完善logo自动获取流程。
-- 2025-07-16 修复admin 管理后台编辑相关问题，优化编辑逻辑。
-- 2025-07-17 增加网站名称修改，站点logo,修改调整手机端排版。
-- 2025-07-22 增加站点拖拽排序，优化icon获取。
-- 2025-07-30 修复item展示问题，增加环境变量VITE_OPEN_LOCK，配置首页也需验证密码。
+ 
+## 🛠️ 更新记录
+- 2025-08-20 **重磅更新**：支持通用型部署，可通过环境变量自定义网站标题和后台名称，无需修改代码。
 - 2025-08-11 增加夜间模式，增加默认搜索引擎设置功能。
+- 2025-07-30 修复item展示问题，增加环境变量 `VITE_OPEN_LOCK`，支持私有化部署（首页访问验证）。
+- 2025-07-22 增加站点拖拽排序，优化 icon 获取逻辑。
+- 2025-07-16 完善 Admin 管理后台，支持可视化编辑分类和站点。
 
 ## 效果预览
 示例站点: [猫猫导航](https://nav.maodeyu.fun)
