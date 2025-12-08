@@ -206,9 +206,9 @@
             </div>
 
             <div class="footer-bottom">
-              <p>&copy; {{ new Date().getFullYear() }} {{ siteConfig.siteName }} - 由 <a :href="`https://github.com/${siteConfig.githubAuthor}`"
-              <p class="footer-tech">基于 Vue.js 构建 | <a href="https://github.com/maodeyu180/mao_nav">
-            </div>
+                 <p>&copy; {{ new Date().getFullYear() }} {{ siteConfig.siteName }} - 由 <a :href="'https://github.com/' + siteConfig.githubAuthor" target="_blank">{{ siteConfig.githubAuthor }}</a> 创建</p>
+                 <p class="footer-tech">基于 Vue.js 构建 | <a href="https://github.com/maodeyu180/mao_nav" target="_blank">开源项目</a></p>
+             </div>
           </footer>
         </div>
       </div>
