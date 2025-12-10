@@ -32,7 +32,7 @@
     <aside class="sidebar">
       <!-- Logo区域 -->
       <div class="logo-section">
-        <!-- 修改点：这里改为动态绑定 src，加上时间戳防缓存 -->
+        <!-- 动态绑定 src，加上时间戳防缓存 -->
         <img :src="logoUrl" alt="logo" class="logo" @error="handleLogoError" />
         <h1 class="site-title">{{ displayTitle }}</h1>
       </div>
@@ -346,9 +346,16 @@ const scrollToCategory = (categoryId) => {
 // 检查是否启用锁定功能
 const checkLockStatus = () => {
   const openLock = import.meta.env.VITE_OPEN_LOCK
-  // 核心修改：将值转为字符串并小写，严格判断是否等于 'true'
-  // 这样 'false'、'0'、空值 都不会触发锁定
-  if (String(openLock).toLowerCase() === 'true') {
+  
+  // 打印调试信息，方便排查
+  console.log('🔒 Lock Debug - Raw Value:', openLock)
+  
+  // 核心修复：转为字符串、去除前后空格、转小写
+  // 这样 ' false ', '0', undefined, null, '' 都会被正确识别为非 'true'
+  const lockValue = String(openLock || '').trim().toLowerCase()
+  console.log('🔒 Lock Debug - Processed:', lockValue)
+
+  if (lockValue === 'true') {
     isLocked.value = true
     // 检查是否已经解锁过
     const savedUnlock = localStorage.getItem('nav_unlocked')
@@ -356,7 +363,7 @@ const checkLockStatus = () => {
       isUnlocked.value = true
     }
   } else {
-    // 如果不是 'true'，强制设为未锁定
+    // 只要不是明确的 'true'，就强制设为未锁定
     isLocked.value = false
     isUnlocked.value = true 
   }
