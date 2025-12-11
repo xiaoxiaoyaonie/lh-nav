@@ -6,7 +6,7 @@
 
 > 💡 **致谢与声明**
 > 
-> 本项目基于原作者 **[猫猫导航](https://github.com/maodeyu180/mao_nav)** 开发。
+> 本项目基于原作者 **[猫猫导航](https://github.com/xiaoxiaoyaonie/lh-nav)** 开发。
 >
 > 🔗 **原项目主页**：https://github.com/maodeyu180/mao_nav
 
@@ -329,8 +329,6 @@ npm run lint
 
 如果你有任何问题或建议，欢迎通过以下方式联系：
 
-- 提交 [Issue](https://github.com/your-username/mao_nav/issues)
-- 发起 [Discussion](https://github.com/your-username/mao_nav/discussions)
 
 ---
 
