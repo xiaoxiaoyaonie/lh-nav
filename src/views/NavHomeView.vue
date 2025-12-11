@@ -238,7 +238,12 @@ const envSiteTitle = import.meta.env.VITE_SITE_TITLE
 const envDescription = import.meta.env.VITE_SITE_DESCRIPTION || '一个简洁、美观的导航网站'
 
 const displayTitle = computed(() => {
-  return envSiteTitle || title.value || ''
+  // 只要环境变量存在，无视任何其他来源（包括 API 返回的 title）
+  if (envSiteTitle && envSiteTitle.trim() !== '') {
+    return envSiteTitle
+  }
+  // 只有环境变量为空时，才尝试使用 API 返回的 title
+  return title.value || '我的导航'
 })
 
 const logoUrl = ref('/logo.png')
