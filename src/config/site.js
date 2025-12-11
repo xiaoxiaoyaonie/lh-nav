@@ -21,7 +21,7 @@ export const getSiteConfig = () => {
     faviconPath: import.meta.env.VITE_FAVICON_PATH || '/favicon.ico',
     
     // GitHub 信息
-    githubUrl: import.meta.env.VITE_GITHUB_URL || 'https://github.com/maodeyu180/mao_nav',
+    githubUrl: import.meta.env.VITE_GITHUB_URL || 'https://github.com/xiaoxiaoyaonie/lh-nav',
     githubAuthor: import.meta.env.VITE_GITHUB_AUTHOR || 'maodeyu180',
     
     // 功能开关
