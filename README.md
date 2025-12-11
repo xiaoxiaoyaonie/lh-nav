@@ -8,7 +8,7 @@
 > 
 > 本项目基于原作者 **[猫猫导航](https://github.com/xiaoxiaoyaonie/lh-nav)** 开发。
 >
-> 🔗 **原项目主页**：https://github.com/maodeyu180/mao_nav
+> 🔗 **原项目主页**：https://github.com/xiaoxiaoyaonie/lh-nav
 
 ---
 
