@@ -68,6 +68,13 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
+        },
+        {
+          "id": "site-1765442163643",
+          "name": "有赞",
+          "url": "https://store.youzan.com/",
+          "description": "有赞后台",
+          "icon": "https://img.yzcdn.cn/upload_files/2022/11/21/FtJwecUqnioQJC5oPYaLZUhQYmXJ.png"
         }
       ]
     },
@@ -509,7 +516,5 @@ export const mockData = {
       ]
     }
   ],
-  "title": "小小导航",
-  "_fileSha": "b5f1acdf9b15e2a8ee0f9ab7b2d0d1a4765b3d63",
-  "search": "google"
+  "title": "猫猫导航"
 }
