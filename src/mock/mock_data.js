@@ -509,7 +509,5 @@ export const mockData = {
       ]
     }
   ],
-  "title": "",
-  "_fileSha": "",
-  "search": "google"
+  "title": "猫猫导航"
 }
