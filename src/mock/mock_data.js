@@ -68,13 +68,6 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
-        },
-        {
-          "id": "site-1765442163643",
-          "name": "有赞",
-          "url": "https://store.youzan.com/",
-          "description": "有赞后台",
-          "icon": "https://img.yzcdn.cn/upload_files/2022/11/21/FtJwecUqnioQJC5oPYaLZUhQYmXJ.png"
         }
       ]
     },
@@ -175,6 +168,13 @@ export const mockData = {
           "url": "https://www.pasyun.com/",
           "description": "ipv6机器",
           "icon": "/sitelogo/www.pasyun.com.ico"
+        },
+        {
+          "id": "site-1765506181476",
+          "name": "spaceship",
+          "url": "https://www.spaceship.com/zh/",
+          "description": "域名注册",
+          "icon": "https://www.faviconextractor.com/favicon/www.spaceship.com"
         }
       ]
     },
@@ -516,7 +516,5 @@ export const mockData = {
       ]
     }
   ],
-  "title": "猫猫导航",
-  "_fileSha": "6d6cfa6bdd68dec93caff48a33582e4e178aaac0",
-  "search": "google"
+  "title": "猫猫导航"
 }
