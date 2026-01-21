@@ -61,6 +61,13 @@ export const mockData = {
           "url": "https://manus.im/app",
           "description": "任务库 ",
           "icon": "https://www.faviconextractor.com/favicon/manus.im"
+        },
+        {
+          "id": "site-1768980372136",
+          "name": " perplexity",
+          "url": "https://www.perplexity.ai/",
+          "description": "AI",
+          "icon": "https://www.faviconextractor.com/favicon/www.perplexity.ai"
         }
       ]
     },
