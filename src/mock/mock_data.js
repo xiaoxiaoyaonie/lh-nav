@@ -78,6 +78,13 @@ export const mockData = {
       "order": 1,
       "sites": [
         {
+          "id": "site-1768980466675",
+          "name": "youtube",
+          "url": "https://www.youtube.com/",
+          "description": "YOUTUBE",
+          "icon": "https://www.faviconextractor.com/favicon/www.youtube.com"
+        },
+        {
           "id": "site-1765172621672",
           "name": "烈火项目直达",
           "url": "https://github.com/xtgm/stallTCP1.3V1",
@@ -139,13 +146,6 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
-        },
-        {
-          "id": "site-1768980466675",
-          "name": "youtube",
-          "url": "https://www.youtube.com/",
-          "description": "YOUTUBE",
-          "icon": "https://www.faviconextractor.com/favicon/www.youtube.com"
         }
       ]
     },
