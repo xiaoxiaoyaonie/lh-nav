@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+// 确保引用路径正确，如果你的项目结构不同，请调整这里的引用
 import NavHomeView from '../views/NavHomeView.vue'
-import TestView from '../views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,38 +8,37 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: NavHomeView,
+      component: NavHomeView
     },
     {
       path: '/admin',
       name: 'admin',
-      component: () => import('../views/AdminView.vue'),
-      meta: {
-        title: '管理后台 - 猫猫导航',
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: TestView,
-      meta: {
-        title: '环境变量测试 - 猫猫导航'
-      }
-    },
-  ],
+      // 路由懒加载
+      component: () => import('../views/AdminView.vue')
+    }
+  ]
 })
 
-// 路由前置守卫
+// 全局前置守卫：进入路由前强制设置标题
 router.beforeEach((to, from, next) => {
-  // 设置页面标题
-  if (to.meta?.title) {
-    document.title = to.meta.title
-  } else {
-    document.title = '猫猫导航'
+  const envTitle = import.meta.env.VITE_SITE_TITLE
+  
+  if (envTitle && envTitle.trim() !== '') {
+    document.title = envTitle
   }
-
   next()
+})
+
+// 全局后置钩子：路由结束后再次确认标题，防止被组件内的逻辑覆盖
+router.afterEach(() => {
+  const envTitle = import.meta.env.VITE_SITE_TITLE
+  
+  if (envTitle && envTitle.trim() !== '') {
+    // 使用 setTimeout 确保这是最后执行的逻辑
+    setTimeout(() => {
+      document.title = envTitle
+    }, 50)
+  }
 })
 
 export default router

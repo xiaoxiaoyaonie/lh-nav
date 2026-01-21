@@ -47,8 +47,8 @@
         <div v-if="loading" class="loading-overlay">
           <div class="loading-content">
             <div class="loading-spinner"></div>
-            <p>正在加载数据...</p>
-            <button @click="skipLoading" class="skip-loading-btn">跳过加载</button>
+            <p>正在从 GitHub 同步最新数据...</p>
+            <!-- <button @click="skipLoading" class="skip-loading-btn">跳过加载</button> -->
           </div>
         </div>
 
@@ -138,18 +138,25 @@ const saving = ref(false)
 
 const activeTab = ref('categories')
 const categories = ref([])
-const navTitle = ref('猫猫导航') 
+
+// ==========================================
+// 核心修复 1: 初始化时直接优先读取环境变量
+// 绝对不写 "猫猫导航" 作为默认值
+// ==========================================
+const navTitle = ref(import.meta.env.VITE_SITE_TITLE || '导航后台')
+
 const selectedCategoryId = ref('') 
 
 const envAdminTitle = import.meta.env.VITE_ADMIN_TITLE
-const envSiteTitle = import.meta.env.VITE_SITE_TITLE || import.meta.env.VITE_SITE_NAME
+const envSiteTitle = import.meta.env.VITE_SITE_TITLE
 
 const adminPageTitle = computed(() => {
   if (envAdminTitle) {
     return envAdminTitle 
   }
-  const siteName = envSiteTitle || navTitle.value || '猫猫导航'
-  return `导航站管理 - ${siteName}`
+  // 确保这里使用的是优先读取过环境变量的 title
+  const siteName = envSiteTitle || navTitle.value || '导航后台'
+  return `管理后台 - ${siteName}`
 })
 
 setTimeout(() => {
@@ -160,7 +167,7 @@ setTimeout(() => {
       categories.value = [{ id: 'default', name: '默认分类', icon: '📁', order: 0, sites: [] }]
     }
   }
-}, 5000)
+}, 8000)
 
 const dialogVisible = ref(false)
 const dialogType = ref('success')
@@ -181,20 +188,16 @@ const handleLogin = async () => {
     if (loginPassword.value === adminPassword) {
       isAuthenticated.value = true
       localStorage.setItem('admin_authenticated', 'true')
-      setTimeout(async () => {
-        try {
-          await loadCategories()
-        } catch (error) {
-          loading.value = false
-        }
-      }, 500)
+      
+      // 登录成功后立即加载数据
+      await loadCategories()
     } else {
       throw new Error('密钥错误，请重新输入')
     }
   } catch (error) {
     loginError.value = error.message
-  } finally {
-    if (!isAuthenticated.value) loading.value = false
+    // 登录失败才关闭 loading，否则保持 loading 直到数据加载完成
+    loading.value = false
   }
 }
 
@@ -214,17 +217,40 @@ const debugLoadData = async () => {
   }
 }
 
+// ==========================================
+// 核心修复 2: 数据加载逻辑，锁死环境变量优先级
+// ==========================================
 const loadCategories = async () => {
   loading.value = true
   try {
-    const { mockData } = await import('../mock/mock_data.js')
-    categories.value = mockData.categories || []
-    navTitle.value = mockData.title || '猫猫导航'
+    // 强制从 GitHub API 拉取最新数据
+    const data = await loadCategoriesFromGitHub()
+    
+    if (data && data.categories) {
+      categories.value = data.categories
+      
+      // 优先级判断：如果环境变量存在，无视 API 返回的 title
+      if (import.meta.env.VITE_SITE_TITLE) {
+        navTitle.value = import.meta.env.VITE_SITE_TITLE
+      } else {
+        navTitle.value = data.title || '导航后台'
+      }
+      
+      console.log('✅ 成功从 GitHub 加载最新数据')
+    } else {
+      categories.value = []
+      console.warn('⚠️ GitHub 数据为空')
+    }
     updateDocTitle() 
   } catch (error) {
+    console.error('加载失败:', error)
     categories.value = []
-    navTitle.value = '猫猫导航'
+    // 如果没有环境变量，才给个默认值
+    if (!import.meta.env.VITE_SITE_TITLE) {
+       navTitle.value = '导航后台'
+    }
     updateDocTitle()
+    showDialog('error', '数据加载失败', '无法从 GitHub 获取数据，请检查网络或 Token 配置。', [error.message])
   } finally {
     loading.value = false
   }
@@ -256,13 +282,20 @@ const closeDialog = () => {
   dialogVisible.value = false
 }
 
+// ==========================================
+// 核心修复 3: 跳过加载逻辑，同样锁死环境变量
+// ==========================================
 const skipLoading = async () => {
   loading.value = false
-  try {
-    const { mockData } = await import('../mock/mock_data.js')
-    categories.value = mockData.categories || []
-    navTitle.value = mockData.title || '猫猫导航'
-  } catch (error) {
+  // 即使是跳过加载使用兜底数据，也要尊重环境变量
+  if (import.meta.env.VITE_SITE_TITLE) {
+    navTitle.value = import.meta.env.VITE_SITE_TITLE
+  } else {
+    navTitle.value = '导航后台'
+  }
+  
+  // 给一个空的或者默认的分类结构，防止报错
+  if (categories.value.length === 0) {
     categories.value = [{ id: 'default', name: '默认分类', icon: '📁', order: 0, sites: [] }]
   }
   updateDocTitle()
@@ -273,6 +306,8 @@ const saveToGitHub = async () => {
   try {
     await saveCategoriesToGitHub({
       categories: categories.value,
+      // 保存时，如果环境变量有值，title 实际上存什么都不重要，因为读取时会优先读环境变量
+      // 但为了数据一致性，我们还是存当前的 title
       title: navTitle.value
     })
     showDialog('success', '🎉 保存成功', '您的更改已成功保存到GitHub仓库！', ['• 更改将在 2-3 分钟内自动部署到线上'])
@@ -291,17 +326,14 @@ const emergencyReset = () => {
 
 onMounted(() => {
   updateDocTitle()
+  // 初始化时确保 loading 状态正确
   loading.value = false
+  
   const savedAuth = localStorage.getItem('admin_authenticated')
   if (savedAuth === 'true') {
     isAuthenticated.value = true
-    import('../mock/mock_data.js').then(({ mockData }) => {
-      categories.value = mockData.categories || []
-      navTitle.value = mockData.title || '猫猫导航'
-      updateDocTitle()
-    }).catch(() => {
-      categories.value = []
-    })
+    // 已认证则自动加载数据
+    loadCategories()
   }
 })
 </script>

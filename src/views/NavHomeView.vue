@@ -210,12 +210,10 @@
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useNavigation } from '@/apis/useNavigation.js'
 import { useThemeStore } from '@/stores/counter.js'
-// 导入搜索引擎logo图片
 import googleLogo from '@/assets/goolge.png'
 import baiduLogo from '@/assets/baidu.png'
 import bingLogo from '@/assets/bing.png'
 import duckLogo from '@/assets/duck.png'
-// 导入GitHub logo
 import githubLogo from '@/assets/github.png'
 
 const { categories, title, defaultSearchEngine, loading, error, fetchCategories } = useNavigation()
@@ -233,21 +231,45 @@ const unlockError = ref('')
 
 const projectUrl = 'https://github.com/maodeyu180/mao_nav'
 
-// 读取环境变量
+// ==========================================
+// 核心修复：绝对优先级标题逻辑
+// ==========================================
+
+// 1. 读取环境变量
 const envSiteTitle = import.meta.env.VITE_SITE_TITLE
 const envDescription = import.meta.env.VITE_SITE_DESCRIPTION || '一个简洁、美观的导航网站'
 
+// 2. 强力计算属性：如果环境变量存在，无视其他一切
 const displayTitle = computed(() => {
-  return envSiteTitle || title.value || ''
+  if (envSiteTitle && envSiteTitle.trim() !== '') {
+    return envSiteTitle
+  }
+  // 如果没有环境变量，才使用 API 返回的 title
+  return title.value || '我的导航'
 })
 
 const logoUrl = ref('/logo.png')
 
+// 3. 核心修复：防止标题被置空
 watch(displayTitle, (newTitle) => {
-  if (newTitle && document.title !== newTitle) {
+  // 如果环境变量存在，且当前 document.title 不是环境变量的值，强制纠正
+  if (envSiteTitle && envSiteTitle.trim() !== '') {
+    if (document.title !== envSiteTitle) {
+      document.title = envSiteTitle
+    }
+    return // 直接返回，不执行后面的逻辑
+  }
+
+  // 只有在没有环境变量的情况下，才允许使用 API 的值
+  // 并且严格防止设置为空字符串，防止出现域名乱码
+  if (newTitle && newTitle.trim() !== '') {
     document.title = newTitle
   }
 }, { immediate: true })
+
+// ==========================================
+// 结束核心修复
+// ==========================================
 
 const searchEngines = {
   google: { url: 'https://www.google.com/search?q=', icon: googleLogo, placeholder: 'Google Search' },
@@ -293,8 +315,8 @@ const scrollToCategory = (categoryId) => {
 
 const checkLockStatus = () => {
   const openLockEnv = import.meta.env.VITE_OPEN_LOCK
-  // 严格检查字符串 "true"
-  const isLockEnabled = String(openLockEnv || '').trim().toLowerCase() === 'true'
+  const normalizedValue = String(openLockEnv || '').toLowerCase().trim()
+  const isLockEnabled = ['true', '1', 'yes', 'on'].includes(normalizedValue)
 
   if (isLockEnabled) {
     isLocked.value = true
@@ -372,6 +394,11 @@ const openGitHub = () => {
 }
 
 onMounted(async () => {
+  // 4. 页面挂载时，最后一道防线
+  if (envSiteTitle && envSiteTitle.trim() !== '') {
+    document.title = envSiteTitle
+  }
+  
   checkLockStatus()
   logoUrl.value = `/logo.png?t=${new Date().getTime()}`
   selectedEngine.value = defaultSearchEngine.value
@@ -384,9 +411,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* 样式保持不变，太长了省略，和您之前发的一样即可 */
-/* 这里只需粘贴 CSS 样式，不需要改动 */
-/* 锁定界面样式 */
+/* 样式保持不变，此处省略 */
 .lock-container {
   position: fixed;
   top: 0;
@@ -494,7 +519,6 @@ onUnmounted(() => {
   background-color: #f5f7fa;
 }
 
-/* 左侧边栏样式 */
 .sidebar {
   width: 280px;
   background-color: #2c3e50;
@@ -531,7 +555,7 @@ onUnmounted(() => {
 
 .category-nav {
   padding: 20px 0;
-  height: calc(100vh - 180px); /* 为底部留出空间 */
+  height: calc(100vh - 180px);
   overflow-y: auto;
 }
 
@@ -576,7 +600,6 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
-/* 左侧边栏底部 */
 .sidebar-footer {
   padding: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -609,7 +632,6 @@ onUnmounted(() => {
   transform: scale(1.1);
 }
 
-/* 右侧主内容区样式 */
 .main-content {
   flex: 1;
   display: flex;
@@ -696,7 +718,6 @@ onUnmounted(() => {
   color: #95a5a6;
 }
 
-/* 移动端菜单按钮 */
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -712,7 +733,6 @@ onUnmounted(() => {
   background: #f8f9fa;
 }
 
-/* 移动端菜单 */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -796,7 +816,7 @@ onUnmounted(() => {
   margin: 0;
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 160px; /* 增加底部内边距确保最后一项完全可见 */
+  padding-bottom: 160px;
 }
 
 .mobile-category-item {
@@ -825,9 +845,6 @@ onUnmounted(() => {
   color: #2c3e50;
 }
 
-
-
-/* 移动端菜单遮罩 */
 .mobile-menu-overlay {
   position: fixed;
   top: 0;
@@ -846,7 +863,6 @@ onUnmounted(() => {
   visibility: visible;
 }
 
-/* 内容区域样式 */
 .content-area {
   flex: 1;
   padding: 30px;
@@ -999,7 +1015,6 @@ onUnmounted(() => {
   text-overflow: ellipsis;
 }
 
-/* 页面底部 */
 .page-footer {
   margin-top: 60px;
   padding: 40px 0;
@@ -1095,23 +1110,22 @@ onUnmounted(() => {
   opacity: 0.8;
 }
 
-/* 响应式设计 */
 @media (max-width: 768px) {
   .nav-home {
     flex-direction: column;
     height: 100vh;
-    height: 100svh; /* 使用动态视口高度 */
+    height: 100svh;
     overflow: hidden;
   }
 
   .sidebar {
-    display: none; /* 在移动端隐藏左侧边栏 */
+    display: none;
   }
 
   .main-content {
     flex: 1;
     height: 100vh;
-    height: 100svh; /* 使用动态视口高度，更准确 */
+    height: 100svh;
     margin-left: 0;
     display: flex;
     flex-direction: column;
@@ -1132,14 +1146,14 @@ onUnmounted(() => {
   .content-area {
     flex: 1;
     padding: 20px 15px;
-    padding-top: 100px; /* 为固定的搜索框留出空间 */
-    padding-bottom: 300px; /* 增加底部padding确保内容可以完全滚动 */
+    padding-top: 100px;
+    padding-bottom: 300px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+    -webkit-overflow-scrolling: touch;
   }
 
   .mobile-menu-btn {
-    display: block; /* 在移动端显示菜单按钮 */
+    display: block;
     flex-shrink: 0;
   }
 
@@ -1181,7 +1195,6 @@ onUnmounted(() => {
     font-size: 22px;
   }
 
-  /* 移动端页面底部 */
   .page-footer {
     margin-top: 40px;
     padding: 30px 20px;
@@ -1206,7 +1219,6 @@ onUnmounted(() => {
   }
 }
 
-/* 主题切换按钮样式 */
 .theme-toggle-btn {
   background: none;
   border: none;
@@ -1226,7 +1238,6 @@ onUnmounted(() => {
   transform: scale(1.1);
 }
 
-/* 暗色模式样式 */
 .dark .nav-home {
   background-color: #1a1a1a;
 }
@@ -1392,7 +1403,6 @@ onUnmounted(() => {
   background: #2563eb;
 }
 
-/* 锁定界面暗色模式 */
 .dark .lock-container {
   background: #0f172a;
 }
