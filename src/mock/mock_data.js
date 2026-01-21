@@ -139,6 +139,13 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
+        },
+        {
+          "id": "site-1768980466675",
+          "name": "youtube",
+          "url": "https://www.youtube.com/",
+          "description": "YOUTUBE",
+          "icon": "https://www.faviconextractor.com/favicon/www.youtube.com"
         }
       ]
     },
