@@ -1,10 +1,74 @@
 export const mockData = {
   "categories": [
     {
+      "id": "ai-tools",
+      "name": "AI智能",
+      "icon": "🤖",
+      "order": 0,
+      "sites": [
+        {
+          "id": "chatgpt",
+          "name": "ChatGPT",
+          "url": "https://chat.openai.com",
+          "description": "OpenAI对话AI助手",
+          "icon": "/sitelogo/chat.openai.com.ico"
+        },
+        {
+          "id": "claude",
+          "name": "Claude",
+          "url": "https://claude.ai",
+          "description": "Anthropic AI助手",
+          "icon": "/sitelogo/claude.ai.ico"
+        },
+        {
+          "id": "midjourney",
+          "name": "Midjourney",
+          "url": "https://www.midjourney.com",
+          "description": "AI图像生成工具",
+          "icon": "/sitelogo/www.midjourney.com.ico"
+        },
+        {
+          "id": "copilot",
+          "name": "GitHub Copilot",
+          "url": "https://github.com/features/copilot",
+          "description": "AI代码助手",
+          "icon": "/sitelogo/github.com.ico"
+        },
+        {
+          "id": "cursor",
+          "name": "Cursor",
+          "url": "https://cursor.sh",
+          "description": "AI代码编辑器",
+          "icon": "/sitelogo/cursor.sh.ico"
+        },
+        {
+          "id": "site-1768978361415",
+          "name": "Gemini3",
+          "url": "https://gemini.google.com/",
+          "description": "谷歌AI",
+          "icon": "https://www.faviconextractor.com/favicon/gemini.google.com"
+        },
+        {
+          "id": "site-1768978409509",
+          "name": "即梦4.0",
+          "url": "https://dreamina.capcut.com/ai-tool/home/",
+          "description": "即梦海外版",
+          "icon": "https://www.faviconextractor.com/favicon/dreamina.capcut.com"
+        },
+        {
+          "id": "site-1768978488451",
+          "name": "manus AI",
+          "url": "https://manus.im/app",
+          "description": "任务库 ",
+          "icon": "https://www.faviconextractor.com/favicon/manus.im"
+        }
+      ]
+    },
+    {
       "id": "my-favorites",
       "name": "我的常用",
       "icon": "💥",
-      "order": 0,
+      "order": 1,
       "sites": [
         {
           "id": "site-1765172621672",
@@ -68,49 +132,6 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
-        }
-      ]
-    },
-    {
-      "id": "ai-tools",
-      "name": "AI智能",
-      "icon": "🤖",
-      "order": 1,
-      "sites": [
-        {
-          "id": "chatgpt",
-          "name": "ChatGPT",
-          "url": "https://chat.openai.com",
-          "description": "OpenAI对话AI助手",
-          "icon": "/sitelogo/chat.openai.com.ico"
-        },
-        {
-          "id": "claude",
-          "name": "Claude",
-          "url": "https://claude.ai",
-          "description": "Anthropic AI助手",
-          "icon": "/sitelogo/claude.ai.ico"
-        },
-        {
-          "id": "midjourney",
-          "name": "Midjourney",
-          "url": "https://www.midjourney.com",
-          "description": "AI图像生成工具",
-          "icon": "/sitelogo/www.midjourney.com.ico"
-        },
-        {
-          "id": "copilot",
-          "name": "GitHub Copilot",
-          "url": "https://github.com/features/copilot",
-          "description": "AI代码助手",
-          "icon": "/sitelogo/github.com.ico"
-        },
-        {
-          "id": "cursor",
-          "name": "Cursor",
-          "url": "https://cursor.sh",
-          "description": "AI代码编辑器",
-          "icon": "/sitelogo/cursor.sh.ico"
         }
       ]
     },
@@ -232,7 +253,7 @@ export const mockData = {
       "id": "community",
       "name": "社区论坛",
       "icon": "👥",
-      "order": 6,
+      "order": 4,
       "sites": [
         {
           "id": "stackoverflow",
@@ -275,7 +296,7 @@ export const mockData = {
       "id": "design",
       "name": "设计工具",
       "icon": "🎨",
-      "order": 4,
+      "order": 5,
       "sites": [
         {
           "id": "figma",
@@ -311,7 +332,7 @@ export const mockData = {
       "id": "finance",
       "name": "财经投资",
       "icon": "💰",
-      "order": 5,
+      "order": 6,
       "sites": [
         {
           "id": "binance",
@@ -375,7 +396,7 @@ export const mockData = {
       "id": "learning",
       "name": "学习资源",
       "icon": "📚",
-      "order": 6,
+      "order": 7,
       "sites": [
         {
           "id": "mdn",
@@ -411,7 +432,7 @@ export const mockData = {
       "id": "tools",
       "name": "在线工具",
       "icon": "⚙️",
-      "order": 7,
+      "order": 8,
       "sites": [
         {
           "id": "json-formatter",
@@ -447,7 +468,7 @@ export const mockData = {
       "id": "entertainment",
       "name": "娱乐休闲",
       "icon": "🎮",
-      "order": 8,
+      "order": 9,
       "sites": [
         {
           "id": "bilibili",
@@ -483,7 +504,7 @@ export const mockData = {
       "id": "office",
       "name": "办公协作",
       "icon": "💼",
-      "order": 9,
+      "order": 10,
       "sites": [
         {
           "id": "notion",
@@ -516,7 +537,5 @@ export const mockData = {
       ]
     }
   ],
-  "title": "小小导航",
-  "_fileSha": "f711d0e46bac3faa0ee3c82fc1cd3f060998f47d",
-  "search": "google"
+  "title": "小小导航"
 }
