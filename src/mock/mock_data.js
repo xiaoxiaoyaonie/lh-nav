@@ -75,6 +75,20 @@ export const mockData = {
           "url": "https://freesub.zjde51.de5.net/",
           "description": "公益节点",
           "icon": "https://www.faviconextractor.com/favicon/freesub.zjde51.de5.net"
+        },
+        {
+          "id": "site-1769035087206",
+          "name": "阶跃AI",
+          "url": "https://www.stepfun.com/download",
+          "description": "AI桌面",
+          "icon": "https://www.stepfun.com/"
+        },
+        {
+          "id": "site-1769035200507",
+          "name": "唔哩AI",
+          "url": "https://wuli.art/generate",
+          "description": "唔哩AI动画",
+          "icon": "https://www.faviconextractor.com/favicon/wuli.art"
         }
       ]
     },
