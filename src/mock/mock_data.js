@@ -186,7 +186,7 @@ export const mockData = {
           "id": "site-1769037835948",
           "name": "gemini3认证",
           "url": "https://www.sheerid.cc/",
-          "description": "gemini3认证",
+          "description": "gemini3认证.\nhttps://batch.1key.me/",
           "icon": "https://www.faviconextractor.com/favicon/www.sheerid.cc"
         },
         {
