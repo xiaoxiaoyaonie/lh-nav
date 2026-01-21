@@ -188,6 +188,13 @@ export const mockData = {
           "url": "https://www.sheerid.cc/",
           "description": "gemini3认证",
           "icon": "https://www.faviconextractor.com/favicon/www.sheerid.cc"
+        },
+        {
+          "id": "site-1769037880842",
+          "name": "虚拟信用卡",
+          "url": "https://www.supaycard.com/landingView?ref=wandow",
+          "description": "虚拟信用卡",
+          "icon": "https://www.faviconextractor.com/favicon/www.supaycard.com"
         }
       ]
     },
