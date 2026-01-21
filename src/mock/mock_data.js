@@ -68,6 +68,13 @@ export const mockData = {
           "url": "https://www.perplexity.ai/",
           "description": "AI",
           "icon": "https://www.faviconextractor.com/favicon/www.perplexity.ai"
+        },
+        {
+          "id": "site-1768982307561",
+          "name": "公益节点",
+          "url": "https://freesub.zjde51.de5.net/",
+          "description": "公益节点",
+          "icon": "https://www.faviconextractor.com/favicon/freesub.zjde51.de5.net"
         }
       ]
     },
