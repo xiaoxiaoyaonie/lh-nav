@@ -167,6 +167,27 @@ export const mockData = {
           "url": "https://curlconverter.com/",
           "description": "curl命令转换工具",
           "icon": "/sitelogo/curlconverter.com.ico"
+        },
+        {
+          "id": "site-1769037761339",
+          "name": "接码平台",
+          "url": "https://hero-sms.com/",
+          "description": "SMS",
+          "icon": "https://www.faviconextractor.com/favicon/hero-sms.com"
+        },
+        {
+          "id": "site-1769037802304",
+          "name": "购买gemini3",
+          "url": "https://www.xintaifree.com/?cid=28&mid=956",
+          "description": "购买gemini3",
+          "icon": "https://www.faviconextractor.com/favicon/www.xintaifree.com"
+        },
+        {
+          "id": "site-1769037835948",
+          "name": "gemini3认证",
+          "url": "https://www.sheerid.cc/",
+          "description": "gemini3认证",
+          "icon": "https://www.faviconextractor.com/favicon/www.sheerid.cc"
         }
       ]
     },
