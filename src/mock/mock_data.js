@@ -195,6 +195,13 @@ export const mockData = {
           "url": "https://www.supaycard.com/landingView?ref=wandow",
           "description": "虚拟信用卡",
           "icon": "https://www.faviconextractor.com/favicon/www.supaycard.com"
+        },
+        {
+          "id": "site-1769063413162",
+          "name": "gemini购买",
+          "url": "https://ka.kennygmail.com/",
+          "description": "",
+          "icon": "https://www.faviconextractor.com/favicon/ka.kennygmail.com"
         }
       ]
     },
